@@ -1,8 +1,6 @@
 package Industryacademic.project.backend.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +12,7 @@ public class MEMBER {
     @Getter
     @Setter
     private int mno;  // primary key 선언
+
 
     @Getter
     @Setter

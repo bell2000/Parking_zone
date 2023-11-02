@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PARKING_FEERepository extends JpaRepository<PARKING_FEE,Integer> {
-    PARKING_FEERepository findByMno(int MNO);
+    PARKING_FEE findByMno(int Mno);
 }

@@ -8,9 +8,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
+/*
 @ComponentScan({"industryacademic.project.backend"})
 @EnableJpaRepositories(basePackages = {"industryacademic.project.backend.repository"})
 @EntityScan(basePackages = {"industryacademic.project.backend..Entity"}) // com.my.jpa.entity 하위에 있는 @Entity 클래스 scan
+*/
+
 
 public class BackendApplication {
 

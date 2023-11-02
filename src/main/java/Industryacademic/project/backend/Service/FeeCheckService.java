@@ -30,7 +30,7 @@ public class FeeCheckService {
         this.M =M;
     }
 
-    public void FeeCheck(int mno,String cno){
+    public int FeeCheck(int mno,String cno){
         CAR c =C.findByCno(cno);
         PARKING_FEE p = new PARKING_FEE();
         p.setC(c);
@@ -52,7 +52,6 @@ public class FeeCheckService {
         // 주차 요금 계산
         int parkingFee = (int) (parkingTime * 100);
 
-
         if(m.getParkingTicket()==null){
             p.setFee(parkingFee);
         }
@@ -60,9 +59,9 @@ public class FeeCheckService {
             p.setFee(0);
         }
 
-
         PF.save(p);
 
+        return p.getFee();
 
 
     }
