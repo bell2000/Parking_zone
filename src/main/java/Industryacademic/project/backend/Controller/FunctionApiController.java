@@ -12,6 +12,10 @@ import Industryacademic.project.backend.repository.CARRepository;
 import Industryacademic.project.backend.repository.MEMBERRepository;
 import Industryacademic.project.backend.repository.PARKING_FEERepository;
 import Industryacademic.project.backend.repository.PARKING_LOTRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +65,7 @@ public class FunctionApiController {
         this.bs = bs;
     }
 
+    @Operation(summary = "회원 정보 및 차량 정보 확인", description = "세션에서 mno를 가져와 회원 정보와 차량 정보를 반환합니다.")
     @GetMapping("/1")
     public ResponseEntity<?> checkInformation(HttpSession session) {
         int mno = (int) session.getAttribute("mno"); // 세션에서 mno 가져오기
@@ -74,7 +79,7 @@ public class FunctionApiController {
 
         return ResponseEntity.ok(response);
     }
-
+    @Operation(summary = "주차 요금 확인", description = "세션에서 mno를 가져와 주차 요금을 확인합니다.")
     @GetMapping("/2")
     public ResponseEntity<?> checkParkingFee(HttpSession session) {
         int mno = (int) session.getAttribute("mno");
@@ -90,6 +95,7 @@ public class FunctionApiController {
         return ResponseEntity.ok(parkingfee);
     }
 
+    @Operation(summary = "티켓 구매", description = "세션에서 mno와 선택한 티켓 유형을 가져와 티켓을 구매합니다.")
     @GetMapping("/3")
     public ResponseEntity<?> Buyticket(HttpSession session, HttpServletRequest request) {
         int mno = (int) session.getAttribute("mno");
@@ -106,6 +112,7 @@ public class FunctionApiController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "주차장 현황 조회", description = "주차장 현재 상태를 확인합니다.")
     @GetMapping("/4")
     public ResponseEntity<?> nowlot(HttpSession session) {
         float now = lc.lotcheck();
@@ -115,19 +122,23 @@ public class FunctionApiController {
         return ResponseEntity.ok(nowStr);
     }
 
+    @Operation(summary = "게시판 표시", description = "게시판 내용을 표시합니다.")
     @GetMapping("/5")
     public ResponseEntity<?> displayBoard(HttpSession session) {
         return ResponseEntity.ok("This is the board display endpoint. Modify it to return the desired data.");
     }
 
+    @Operation(summary = "모든 게시물 가져오기", description = "모든 게시물을 가져옵니다.")
     @GetMapping("/posts")
     public ResponseEntity<List<BoardPost>> getAllPosts(HttpSession session) {
         List<BoardPost> posts = bs.Viewall();
         return ResponseEntity.ok(posts);
     }
 
+    @Operation(summary = "게시물 작성", description = "게시물을 작성합니다.")
     @PostMapping("/posts")
-    public ResponseEntity<Void> createPost(@RequestBody BoardPost post, HttpSession session) {
+    public ResponseEntity<Void> createPost(@Parameter(description = "게시물 데이터를 포함하는 JSON 객체. title: 제목, content: 내용", content = @Content(schema = @Schema(implementation = BoardPost.class)))@RequestBody BoardPost post,
+                                           @Parameter(description = "세션 객체", hidden = true)HttpSession session) {
         int mno = (int) session.getAttribute("mno");
         MEMBER member = M.findByMno(mno);
 
@@ -136,6 +147,7 @@ public class FunctionApiController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @Operation(summary = "로그아웃", description = "로그아웃합니다.")
     @GetMapping("/logout")
     public ResponseEntity<?> logout() {
         return ResponseEntity.ok("Logout endpoint. Add your logout logic here.");

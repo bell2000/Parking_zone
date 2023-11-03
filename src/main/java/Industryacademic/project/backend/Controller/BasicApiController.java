@@ -3,6 +3,9 @@ package Industryacademic.project.backend.Controller;
 import Industryacademic.project.backend.Service.LoginService;
 import Industryacademic.project.backend.Service.RegistCarService;
 import Industryacademic.project.backend.Service.RegistMEMBERService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +33,8 @@ public class BasicApiController {
 
 
     // 학생 등록 양식을 위한 매핑
+
+    @Operation(summary = "학생 등록", description = "학생을 등록합니다.")
     @PostMapping("/register/member")
     public ResponseEntity<Map<String, String>> registerMember(@RequestBody Map<String, Object> memberData) {
         int mno = (int) memberData.get("mno");
@@ -45,6 +50,7 @@ public class BasicApiController {
     }
 
 
+    @Operation(summary = "차량 등록", description = "차량을 등록합니다.")
     @PostMapping("/register/car")
     public ResponseEntity<Map<String, String>> registerCar(@RequestBody Map<String, Object> carData) {
         String cno = (String) carData.get("cno");
@@ -59,7 +65,12 @@ public class BasicApiController {
     }
 
 
+    @Operation(summary = "로그인", description = "로그인을 시도합니다.")
     @PostMapping("/login")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "인증 성공"),
+            @ApiResponse(responseCode = "401", description = "인증 실패")
+    })
     public ResponseEntity<String> login(@RequestBody Map<String, Object> loginRequest, HttpSession session) {
         int mno = (int) loginRequest.get("mno");
         String password = (String) loginRequest.get("password");
