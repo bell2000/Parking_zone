@@ -4,14 +4,12 @@ import Industryacademic.project.backend.Entity.BoardPost;
 import Industryacademic.project.backend.Entity.CAR;
 import Industryacademic.project.backend.Entity.MEMBER;
 import Industryacademic.project.backend.Entity.PARKING_FEE;
-import Industryacademic.project.backend.Service.BoardService;
-import Industryacademic.project.backend.Service.BuyTicketService;
-import Industryacademic.project.backend.Service.FeeCheckService;
-import Industryacademic.project.backend.Service.Lot_CheckService;
+import Industryacademic.project.backend.Service.*;
 import Industryacademic.project.backend.repository.CARRepository;
 import Industryacademic.project.backend.repository.MEMBERRepository;
 import Industryacademic.project.backend.repository.PARKING_FEERepository;
 import Industryacademic.project.backend.repository.PARKING_LOTRepository;
+import com.google.protobuf.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -46,6 +44,9 @@ public class FunctionApiController {
     private final BoardService bs;
 
     @Autowired
+    private final ApiExplorer api;
+
+    @Autowired
     private CARRepository C;
 
     @Autowired
@@ -58,11 +59,12 @@ public class FunctionApiController {
     private PARKING_LOTRepository PL;
 
     @Autowired
-    public FunctionApiController(FeeCheckService fs, BuyTicketService bt, Lot_CheckService lc, BoardService bs) {
+    public FunctionApiController(FeeCheckService fs, BuyTicketService bt, Lot_CheckService lc, BoardService bs, ApiExplorer api) {
         this.fs = fs;
         this.bt = bt;
         this.lc = lc;
         this.bs = bs;
+        this.api = api;
     }
 
     @Operation(summary = "회원 정보 및 차량 정보 확인", description = "세션에서 mno를 가져와 회원 정보와 차량 정보를 반환합니다.")
@@ -112,15 +114,13 @@ public class FunctionApiController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "주차장 현황 조회", description = "주차장 현재 상태를 확인합니다.")
+    @Operation(summary = "가장 가까운 주차장 조회", description = "마포구 중앙도서관 주변의 가장 가까운 주차장 정보를 확인합니다.")
     @GetMapping("/4")
-    public ResponseEntity<?> nowlot(HttpSession session) {
-        float now = lc.lotcheck();
-
-        String nowStr = String.format("%.2f", now); // now를 String 타입으로 변환
-
-        return ResponseEntity.ok(nowStr);
+    @ResponseBody
+    public List<String> getClosestParkingInfo() {
+        return api.getClosestParkingInfo();
     }
+
 
     @Operation(summary = "게시판 표시", description = "게시판 내용을 표시합니다.")
     @GetMapping("/5")
