@@ -17,10 +17,10 @@ public class RegistMEMBERService {
     }
 
     @Transactional
-    public void MEMBERRegistration(int mno,String password ,String pno){
+    public void MEMBERRegistration(String id,String password ,String pno){
 
         MEMBER m = new MEMBER();
-        m.setMno(mno);
+        m.setId(id);
         m.setPassword(password);
         m.setPno(pno);
 

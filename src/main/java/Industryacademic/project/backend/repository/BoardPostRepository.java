@@ -11,4 +11,5 @@ public interface BoardPostRepository extends JpaRepository<BoardPost,Integer> {
     BoardPost findByMemberMno(int mno);
 
     BoardPost findByPostidAndMemberMno(int postid, int mno);
+
 }

@@ -8,11 +8,16 @@ import lombok.Setter;
 @Entity
 @Table(name="MEMBER")
 public class MEMBER {
-    @Id
     @Getter
     @Setter
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동증가 이제 실질적 기능은 id에서
     private int mno;  // primary key 선언
 
+
+    @Getter
+    @Setter
+    private String id;
 
     @Getter
     @Setter

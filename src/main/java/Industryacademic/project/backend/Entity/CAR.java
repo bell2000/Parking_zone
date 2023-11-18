@@ -9,10 +9,10 @@ import lombok.Setter;
 @Getter
 
 public class CAR {
-    @Id
     @Column(name = "Cno")
     @Getter
     @Setter
+    @Id
     private String cno;
 
     @ManyToOne

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>예측 결과</title>
+</head>
+<body>
+<h1>Forecast Result</h1>
+<p th:text="${message}"></p>
+<p>
+    예측량: <span th:text="${usagePrediction != null ? usagePrediction.precipitationAmount : '데이터가 없습니다.'}"></span>
+</p>
+</body>
+</html>

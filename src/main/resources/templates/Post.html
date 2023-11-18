@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>게시판</title>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>게시판</h1>
+
+<form id="postForm">
+    <label for="title">제목:</label><br>
+    <input type="text" id="title" name="title"><br>
+    <label for="content">내용:</label><br>
+    <textarea id="content" name="content"></textarea><br>
+    <input type="button" id="submitPost" value="등록">
+</form>
+
+<h2>게시글 목록</h2>
+<div id="postList"></div>
+
+<script>
+    $(document).ready(function(){
+        $.get("/api/posts", function(data, status){
+            $("#postList").empty();
+            data.forEach(function(post){
+                // 제목과 내용을 표시
+                $("#postList").append("<p>제목: " + post.title + ", 내용: " + post.content + "</p>");
+                // created를 표시
+                $("#postList").append("<p>created: " + post.created + "</p>");
+            });
+        });
+
+        $("#submitPost").click(function() {
+            // 제목과 내용을 변수에 저장
+            var title = $("#title").val();
+            var content = $("#content").val();
+            // 서버에 POST 요청
+            $.ajax({
+                url: "/api/posts",
+                type: "POST",
+                data: JSON.stringify({ title: title, content: content }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data, status){
+                    // 제목과 내용을 초기화
+                    $("#title").val("");
+                    $("#content").val("");
+                    // 게시글 목록을 새로고침
+                    $.get("/api/posts", function(data, status){
+                        $("#postList").empty();
+                        data.forEach(function(post){
+                            $("#postList").append("<p>제목: " + post.title + ", 내용: " + post.content + "</p>");
+                            $("#postList").append("<p>created: " + post.created + "</p>");
+                        });
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

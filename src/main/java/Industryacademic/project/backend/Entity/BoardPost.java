@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @Table(name="Boardpost")
 public class BoardPost {
 
-    @Id
     @Getter
     @Setter
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 1씩 늘어감
     private int postid;
 

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 정보</title>
+</head>
+<body>
+<h1>사용자 정보</h1>
+
+<p>
+    아이디: <span th:text="${member.id}"></span>
+</p>
+<p>
+    휴대폰 번호: <span th:text="${member.pno}"></span>
+</p>
+<p>
+    주차권 보유 현황: <span th:text="${member.parkingTicket}"></span>
+</p>
+<p>
+    차량 번호: <span th:text="${car}"></span>
+</p>
+</body>
+</html>

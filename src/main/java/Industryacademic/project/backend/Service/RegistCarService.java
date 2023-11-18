@@ -14,8 +14,8 @@ public class RegistCarService {
     @Autowired
     private MEMBERRepository S;
 
-    public void registerCar(String cno, int sno) {
-        MEMBER MEMBER = S.findByMno(sno);
+    public void registerCar(String cno, String id) {
+        MEMBER MEMBER = S.findById(id);
         CAR car = new CAR();
         car.setCno(cno);
         car.setMember(MEMBER);

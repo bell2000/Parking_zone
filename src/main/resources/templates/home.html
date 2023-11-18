@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+<head>
+    <title>Test Page</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div class ="container">
+
+    <div>
+        <h1>Test Page</h1>
+        <!-- 학생 등록 양식 -->
+        <form action="/api/register/member" method="post">
+            <h2>회원 가입</h2>
+            <input type="text" name="id" placeholder="아이디">
+            <input type="password" name="password" placeholder="비밀번호">
+            <input type="phone_number" name="pno" placeholder="휴대폰번호">
+            <input type="submit" value="등록">
+        </form>
+
+        <!-- 자동차 등록 양식 -->
+        <form action="/api/register/car" method="post">
+            <h2>자동차 등록</h2>
+            <input type="text" name="cno" placeholder="차량번호">
+            <input type="text" name="id" placeholder="아이디">
+            <input type="submit" value="등록">
+        </form>
+
+        <!-- 로그인 양식 -->
+        <form action="/login" method="post">
+            <h2>로그인</h2>
+            <input type="text" name="id" placeholder="아이디">
+            <input type="password" name="password" placeholder="비밀번호">
+            <input type="submit" value="로그인">
+        </form>
+        <!-- /api/nowlot 양식 -->
+        <form th:action="@{/api/nowlot}" method="get">
+            <h2>주차장 상태 확인</h2>
+            <button type="submit">확인</button>
+        </form>
+
+        <!-- /api/showboard 양식 -->
+        <form th:action="@{/api/showboard}" method="get">
+            <h2>게시판 보기</h2>
+            <button type="submit">보기</button>
+        </form>
+
+
+        <!-- Forecast 양식 -->
+        <form id="forecastForm" action="/api/forecast" method="post">
+            <h2>예측</h2>
+            <input type="text" name="time" placeholder="시간">
+            <input type="text" name="weather" placeholder="날씨">
+            <button type="button" onclick="submitForecastForm()">예측 진행</button>
+        </form>
+
+        <script>
+            function submitForecastForm() {
+                document.getElementById("forecastForm").submit();
+            }
+        </script>
+    </div>
+</div>
+</body>
+</html>

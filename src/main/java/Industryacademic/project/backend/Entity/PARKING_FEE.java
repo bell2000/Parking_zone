@@ -8,10 +8,10 @@ import lombok.Setter;
 @Table(name="PARKING_FEE")
 public class PARKING_FEE {
 
-    @Id
     @Getter
     @Setter
     @Column(name = "MNO")
+    @Id
     private int mno;  // primary key 선언
 
 
