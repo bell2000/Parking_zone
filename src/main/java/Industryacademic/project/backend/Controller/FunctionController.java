@@ -4,14 +4,13 @@ import Industryacademic.project.backend.Entity.BoardPost;
 import Industryacademic.project.backend.Entity.CAR;
 import Industryacademic.project.backend.Entity.MEMBER;
 import Industryacademic.project.backend.Entity.PARKING_FEE;
-import Industryacademic.project.backend.Service.BoardService;
-import Industryacademic.project.backend.Service.BuyTicketService;
-import Industryacademic.project.backend.Service.FeeCheckService;
-import Industryacademic.project.backend.Service.Lot_CheckService;
+import Industryacademic.project.backend.Service.*;
 import Industryacademic.project.backend.repository.CARRepository;
 import Industryacademic.project.backend.repository.MEMBERRepository;
 import Industryacademic.project.backend.repository.PARKING_FEERepository;
 import Industryacademic.project.backend.repository.PARKING_LOTRepository;
+import com.google.protobuf.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +37,15 @@ public class FunctionController {
     private final BoardService bs;
 
     @Autowired
-    public FunctionController(FeeCheckService fs, BuyTicketService bt,Lot_CheckService lc,BoardService bs){
+    private final ApiExplorer api;
+
+    @Autowired
+    public FunctionController(FeeCheckService fs, BuyTicketService bt, Lot_CheckService lc, BoardService bs, ApiExplorer api){
         this.fs =fs;
         this.bt =bt;
         this.lc=lc;
         this.bs =bs;
+        this.api = api;
     }
 
     @Autowired
@@ -106,7 +109,13 @@ public class FunctionController {
         return modelAndView;
     }
 
-aa
+
+    @Operation(summary = "가장 가까운 주차장 조회", description = "마포구 중앙도서관 주변의 가장 가까운 주차장 정보를 확인합니다.")
+    @GetMapping("/4")
+    @ResponseBody
+    public List<String> getClosestParkingInfo() {
+        return api.getClosestParkingInfo();
+    }
     @GetMapping("/function/5")
     public ModelAndView displayBoard(HttpSession session) {
         int mno = (int) session.getAttribute("mno");
