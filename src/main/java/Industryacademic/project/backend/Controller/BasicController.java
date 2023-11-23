@@ -31,14 +31,17 @@ public class BasicController {
 
     private final Lot_CheckService lc;
 
+    private final ParkingService ps;
+
     @Autowired
-    public BasicController(RegistMEMBERService rm, RegistCarService rc, LoginService ls,ForecastService fs,BoardService bs,Lot_CheckService lc){
+    public BasicController(RegistMEMBERService rm, RegistCarService rc, LoginService ls,ForecastService fs,BoardService bs,Lot_CheckService lc,ParkingService ps){
         this.rm =rm;
         this.rc =rc;
         this.ls =ls;
         this.fs=fs;
         this.bs =bs;
         this.lc=lc;
+        this.ps=ps;
     }
 
     @GetMapping("/api/nowlot")
@@ -55,7 +58,6 @@ public class BasicController {
 
     @GetMapping("/api/showboard")
     public ModelAndView displayBoard2(HttpSession session) { //로그인 안해도 사용 가능
-
 
         ModelAndView modelAndView = new ModelAndView("Post2");
         return modelAndView;
@@ -92,7 +94,7 @@ public class BasicController {
     public ModelAndView registerCar(@RequestParam("cno") String cno, @RequestParam("id") String id) {
 
         rc.registerCar(cno, id); // 자동차 등록 로직을 호출
-
+        ps.Parking(cno);
         ModelAndView modelAndView = new ModelAndView("regist"); // View 이름을 설정합니다.
         modelAndView.addObject("message", "등록되었습니다."); // 메시지를 모델에 추가합니다.
         return modelAndView; // 메인 페이지로 리디렉션하지 않고 메시지와 함께 그대로 표시됩니다.
@@ -107,7 +109,6 @@ public class BasicController {
             session.setAttribute("id",id); // 세션에 mno 저장
             modelAndView.addObject("message", "인증되었습니다."); // 인증 성공 메시지를 모델에 추가합니다.
             modelAndView.setViewName("choice"); // 로그인 성공 시 대시보드 페이지로 이동
-
         } else {
             modelAndView.addObject("error", "로그인 실패"); // 로그인 실패 메시지를 모델에 추가합니다.
             modelAndView.setViewName("home"); // 로그인 실패 시 로그인 페이지로 이동
@@ -116,6 +117,6 @@ public class BasicController {
         return modelAndView;
     }
 
-
+//Spring Security , 예외처리 -> 구현
 
 }

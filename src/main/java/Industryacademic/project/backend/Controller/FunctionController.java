@@ -111,7 +111,7 @@ public class FunctionController {
 
 
     @Operation(summary = "가장 가까운 주차장 조회", description = "마포구 중앙도서관 주변의 가장 가까운 주차장 정보를 확인합니다.")
-    @GetMapping("/4")
+    @GetMapping("/function/4")
     @ResponseBody
     public List<String> getClosestParkingInfo() {
         return api.getClosestParkingInfo();

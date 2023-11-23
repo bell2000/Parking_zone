@@ -24,11 +24,12 @@ public class ParkingService {
     @Transactional
     public void Parking(String cno) {
 
-        Timestamp current = Timestamp.valueOf(LocalDateTime.now());
+        LocalDateTime current = LocalDateTime.now();
+        LocalDateTime entrytime = current.minusMinutes(30);
 
         PARKING_LOT parkingLot = new PARKING_LOT();
         parkingLot.setCno(cno);
-        parkingLot.setEntryTime(current);
+        parkingLot.setEntryTime(Timestamp.valueOf(entrytime));
 
         P.save(parkingLot);
     }
